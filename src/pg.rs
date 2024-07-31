@@ -40,6 +40,12 @@ pub struct InstrumentedPgConnection {
     info: PgConnectionInfo,
 }
 
+impl InstrumentedPgConnection {
+    pub fn as_pg_conn_mut(&mut self) -> &mut PgConnection {
+        &mut self.inner
+    }
+}
+
 #[cfg(feature = "r2d2")]
 impl R2D2Connection for InstrumentedPgConnection {
     fn ping(&mut self) -> QueryResult<()> {
