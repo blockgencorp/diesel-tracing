@@ -11,7 +11,6 @@ use diesel::migration::{MigrationConnection, CREATE_MIGRATIONS_TABLE};
 use diesel::pg::{GetPgMetadataCache, Pg, PgConnection, PgRowByRowLoadingMode, TransactionBuilder};
 use diesel::query_builder::{AsChangeset, IntoUpdateTarget, Query, QueryFragment, QueryId};
 use diesel::query_dsl::{LoadQuery, UpdateAndFetchResults};
-use diesel::r2d2::R2D2Connection;
 use diesel::result::{ConnectionError, ConnectionResult, QueryResult};
 use diesel::{define_sql_function, sql_query, RunQueryDsl};
 use diesel::{select, Table};
@@ -47,7 +46,7 @@ impl InstrumentedPgConnection {
 }
 
 #[cfg(feature = "r2d2")]
-impl R2D2Connection for InstrumentedPgConnection {
+impl diesel::r2d2::R2D2Connection for InstrumentedPgConnection {
     fn ping(&mut self) -> QueryResult<()> {
         self.inner.batch_execute("SELECT 1")?;
 
