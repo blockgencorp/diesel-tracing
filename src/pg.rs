@@ -214,6 +214,21 @@ impl Connection for InstrumentedPgConnection {
     fn set_instrumentation(&mut self, instrumentation: impl Instrumentation) {
         self.inner.set_instrumentation(instrumentation)
     }
+
+    #[instrument(
+        fields(
+            db.name=%self.info.current_database,
+            db.system="postgresql",
+            db.version=%self.info.version,
+            otel.kind="client",
+            net.peer.ip=%self.info.inet_server_addr,
+            net.peer.port=%self.info.inet_server_port,
+        ),
+        skip(self, size)
+    )]
+    fn set_prepared_statement_cache_size(&mut self, size: diesel::connection::CacheSize) {
+        self.inner.set_prepared_statement_cache_size(size);
+    }
 }
 
 impl LoadConnection<DefaultLoadingMode> for InstrumentedPgConnection {
