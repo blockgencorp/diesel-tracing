@@ -217,14 +217,14 @@ impl Connection for InstrumentedPgConnection {
 }
 
 impl LoadConnection<DefaultLoadingMode> for InstrumentedPgConnection {
-    type Cursor<'conn, 'query> =
-        <PgConnection as LoadConnection<DefaultLoadingMode>>::Cursor<'conn, 'query>
-            where
-                Self: 'conn;
-    type Row<'conn, 'query> =
-        <PgConnection as LoadConnection<DefaultLoadingMode>>::Row<'conn, 'query>
-            where
-                Self: 'conn;
+    type Cursor<'conn, 'query>
+        = <PgConnection as LoadConnection<DefaultLoadingMode>>::Cursor<'conn, 'query>
+    where
+        Self: 'conn;
+    type Row<'conn, 'query>
+        = <PgConnection as LoadConnection<DefaultLoadingMode>>::Row<'conn, 'query>
+    where
+        Self: 'conn;
 
     #[cfg_attr(
         feature = "statement-fields",
@@ -270,12 +270,12 @@ impl LoadConnection<DefaultLoadingMode> for InstrumentedPgConnection {
 }
 
 impl LoadConnection<PgRowByRowLoadingMode> for InstrumentedPgConnection {
-    type Cursor<'conn, 'query> =
-        <PgConnection as LoadConnection<PgRowByRowLoadingMode>>::Cursor<'conn, 'query>
+    type Cursor<'conn, 'query>
+        = <PgConnection as LoadConnection<PgRowByRowLoadingMode>>::Cursor<'conn, 'query>
     where
         Self: 'conn;
-    type Row<'conn, 'query> =
-        <PgConnection as LoadConnection<PgRowByRowLoadingMode>>::Row<'conn, 'query>
+    type Row<'conn, 'query>
+        = <PgConnection as LoadConnection<PgRowByRowLoadingMode>>::Row<'conn, 'query>
     where
         Self: 'conn;
 
